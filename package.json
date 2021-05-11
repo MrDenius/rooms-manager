@@ -1,0 +1,17 @@
+{
+  "name": "rooms-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^9.0.1",
+    "electron": "^12.0.7",
+    "node-telegram-bot-api": "^0.53.0"
+  }
+}
