@@ -90,15 +90,29 @@ const CanvasCrossManager = {
 				};
 			};
 			const DrawDoor = () => {
+				const DrawRect = (settings) => {
+					ctx.rect(
+						canvas.width * settings.x,
+						canvas.height * settings.y,
+						canvas.width * settings.h,
+						canvas.height * settings.w
+					);
+				};
+
+				if (RoomConfig.doors.length !== 0) {
+					ctx.beginPath();
+					ctx.strokeStyle = "#f0f";
+					RoomConfig.doors.forEach((door) =>
+						door.imgId === StartImage.id
+							? DrawRect(door)
+							: undefined
+					);
+					ctx.stroke();
+				}
 				if (DoorSettings.x != -1 && DoorSettings.h != -1) {
 					ctx.beginPath();
 					ctx.strokeStyle = "#f00";
-					ctx.rect(
-						canvas.width * DoorSettings.x,
-						canvas.height * DoorSettings.y,
-						canvas.width * DoorSettings.h,
-						canvas.height * DoorSettings.w
-					);
+					DrawRect(DoorSettings);
 					ctx.stroke();
 				}
 			};
@@ -152,14 +166,14 @@ CanvasCrossManager.Enable();
 let RoomConfig = undefined;
 
 const StartRoom = () => {
-	RoomConfig = { imgs: [], imgsData: [] };
+	RoomConfig = { imgs: [], imgsData: [], doors: [] };
 	StartImage.id = -1;
 };
 
 const EndRoom = () => {
 	RoomConfig.version = 1;
 	RoomConfig.imgId = document.querySelector("#room-id").value;
-	RoomConfig.imgLoop = document.querySelector("#image-loop").value === "on";
+	RoomConfig.imgLoop = document.querySelector("#image-loop").checked;
 
 	console.log(RoomConfig);
 	RoomConfig = undefined;
@@ -168,7 +182,7 @@ const EndRoom = () => {
 const StartImage = (imgName, img) => {
 	if (!RoomConfig) new Error("No RoomConfig started!");
 	StartImage.id += 1;
-	RoomConfig.imgs.push = imgName;
+	RoomConfig.imgs.push(imgName);
 	RoomConfig.imgsData.push(img);
 
 	ChangeCanvasImage(img);
@@ -176,7 +190,7 @@ const StartImage = (imgName, img) => {
 const EndImage = () => {};
 
 let DoorSettings = { x: -1, y: -1, h: -1, w: -1 };
-const SaveDoor = () => {
+const SaveDoor = (settings) => {
 	if (!settings) {
 		settings = {};
 	}
@@ -191,6 +205,8 @@ const SaveDoor = () => {
 		...DoorSettings,
 	};
 	console.log(cfg);
+	RoomConfig.doors.push(cfg);
+	DoorSettings = { x: -1, y: -1, h: -1, w: -1 };
 };
 
 const DrawInputs = () => {
@@ -244,8 +260,10 @@ const DrawInputs = () => {
 	bSaveRoom.innerText = "End Room";
 	document.querySelector("#manage-box").appendChild(bSaveRoom);
 
+	//TODO: Це кнопочки эвенты нажатия
 	bCreate.onclick = () => {
 		EndImage();
+		StartImage();
 	};
 	bCreateDoor.onclick = () => {
 		SaveDoor();
