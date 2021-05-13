@@ -2,6 +2,10 @@ const { ipcRenderer } = require("electron");
 
 const path = require("path");
 
+const CFGManager = require("./configManager");
+
+const ROOMS_PATH = path.join(__dirname + "..\\..\\testRooms");
+
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -176,6 +180,10 @@ const EndRoom = () => {
 	RoomConfig.imgLoop = document.querySelector("#image-loop").checked;
 
 	console.log(RoomConfig);
+	CFGManager.Create({
+		path: ROOMS_PATH,
+		RoomConfig,
+	});
 	RoomConfig = undefined;
 };
 
