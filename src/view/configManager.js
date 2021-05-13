@@ -2,13 +2,14 @@ const path = require("path");
 const fs = require("fs");
 
 const Create = (settings) => {
-	if (path.basename(settings.path) !== settings.RoomConfig.imgId.toString())
+	if (path.basename(settings.path) !== settings.RoomConfig.name.toString())
 		settings.path = path.join(
 			settings.path,
-			settings.RoomConfig.imgId.toString()
+			settings.RoomConfig.name.toString()
 		);
 	CreateImages(settings.path, settings.RoomConfig);
 	settings.RoomConfig.imgsData = undefined;
+	settings.RoomConfig.name = undefined;
 	fs.writeFileSync(
 		path.join(settings.path, "/room.json"),
 		JSON.stringify(settings.RoomConfig)

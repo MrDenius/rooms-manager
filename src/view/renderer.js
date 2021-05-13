@@ -98,8 +98,8 @@ const CanvasCrossManager = {
 					ctx.rect(
 						canvas.width * settings.x,
 						canvas.height * settings.y,
-						canvas.width * settings.h,
-						canvas.height * settings.w
+						canvas.width * settings.w,
+						canvas.height * settings.h
 					);
 				};
 
@@ -139,8 +139,8 @@ const CanvasCrossManager = {
 			CanvasCrossManager._md = (event) => {
 				const pos = ProcClick(event);
 				if (doorF) {
-					DoorSettings.h = pos.x - DoorSettings.x;
-					DoorSettings.w = pos.y - DoorSettings.y;
+					DoorSettings.w = pos.x - DoorSettings.x;
+					DoorSettings.h = pos.y - DoorSettings.y;
 					doorF = false;
 				} else {
 					DoorSettings.x = pos.x;
@@ -175,8 +175,9 @@ const StartRoom = () => {
 };
 
 const EndRoom = () => {
-	RoomConfig.version = 1;
-	RoomConfig.imgId = document.querySelector("#room-id").value;
+	RoomConfig.version = 2;
+	RoomConfig.name = document.querySelector("#room-id").value;
+	RoomConfig.imgId = document.querySelector("#img-id-start").value || 0;
 	RoomConfig.imgLoop = document.querySelector("#image-loop").checked;
 
 	console.log(RoomConfig);
@@ -239,7 +240,7 @@ const DrawInputs = () => {
 	const inputs = [
 		CreateInput("Room ID", "room-id"),
 		CreateInput("Start Image ID", "img-id-start"),
-		CreateInput("Room ID", "image-loop", "checkbox"),
+		CreateInput("Image loop", "image-loop", "checkbox"),
 		(() => {
 			const l = document.createElement("label");
 			l.innerText = "Door Settings";

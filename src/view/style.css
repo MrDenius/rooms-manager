@@ -4,10 +4,11 @@ body {
 }
 
 #manage-box {
-	width: 100px;
+	width: 212px;
 	margin: 0;
 	position: fixed;
 	left: 0;
+	background-color: #222;
 }
 
 #input-box {
